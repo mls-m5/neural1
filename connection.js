@@ -6,8 +6,11 @@ function createConnection(from, to) {
         weight: Math.round(Math.random() * 200 - 100) / 100,
         newWeight: 0, //Ska användas när ändringarna beräknas
         nodeDelta: 0,
-        prepareCalculation() {
+        prepareCalculation: function() {
             this.newWeight = this.weight;
+        },
+        finalizeCalculations: function() {
+            this.weight = this.newWeight;
         },
         draw: function() {
             if (this.weight < 0) {
@@ -24,7 +27,7 @@ function createConnection(from, to) {
             ctx.strokeStyle = "black";
             midx = (this.from.x + this.to.x) / 2;
             midy = (this.from.y + this.to.y) / 2;
-            ctx.fillText(this.weight, midx, midy - 15);
+            ctx.fillText(twoDecimals(this.weight), midx, midy - 15);
         }
     };
     network.connections.push(connection);

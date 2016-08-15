@@ -20,6 +20,7 @@ function createUnit(name, x, y, type) {
         toConnections: [],
         error2: 0,
         color: "#000",
+        
         draw: function() {
             ctx.fillStyle = this.color;
             drawCircle(this.x, this.y);
@@ -27,7 +28,7 @@ function createUnit(name, x, y, type) {
             
             if(this.type == unit_types.out) {
                 ctx.textAlign = "start";
-                ctx.fillText(twoDecimals(this.targetValue) + ", e=" + twoDecimals(this.value - this.targetValue), this.x + 20, this.y)
+                ctx.fillText(twoDecimals(this.targetValue) + ", e=" + twoDecimals(this.targetValue - this.value), this.x + 20, this.y)
             }
             
             
@@ -44,7 +45,8 @@ function createUnit(name, x, y, type) {
             }
             
         },
-        calculate() {
+        
+        calculate: function() {
             //Calculate the values
             if (this.fromConnections.length == 0) {
                 return;
@@ -57,13 +59,14 @@ function createUnit(name, x, y, type) {
             
             this.value = activationFunction(this.intermediateValue);
             
+            //A totaly useless calculation
             if (this.type=unit_types.out) {
                 var e = this.targetValue - this.value;
                 this.error2 = e*e / 2;
             }
         },
-        backpropagate() {
-            if (unit_types.in || this.type == unit_types.const) {
+        backpropagate: function() {
+            if (this.type == unit_types.in || this.type == unit_types.const) {
                 return; //Cannot backpropagate longer
             }
             this.nodeDelta = -(this.targetValue - this.value) * this.value * (1 - this.value);
@@ -71,7 +74,8 @@ function createUnit(name, x, y, type) {
             for (var i in this.fromConnections) {
                 var connection = this.fromConnections[i];
                 var totalDeriv = this.nodeDelta * connection.from.value;
-                connection.weight
+                network.info += ("total skillnad " + this.name + "-" + connection.from.name + " " + twoDecimals(totalDeriv) + " ");
+                connection.newWeight += -totalDeriv * network.learningRate;
             }
         }
     };
