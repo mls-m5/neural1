@@ -1,17 +1,1 @@
 
-
-.unit {
-	background: black;
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	color: white;
-	line-height: 40px;
-	text-align: center;
-	border-radius: 50%;
-	font-family: mono;
-}
-
-.neural_canvas {
-	position: absolute;
-}

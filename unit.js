@@ -1,9 +1,9 @@
 
 unit_types = Object.freeze({
-    const: 0,
-    in: 1,
-    out: 2,
-    middle: 3
+    hidden: 0,
+    const: 1,
+    in: 2,
+    out: 3
 });
 
 
@@ -15,7 +15,7 @@ function createUnit(name, x, y, type) {
         value: 1, //Use to be called unit_types.out in documentations
         type: type,
         targetValue: 0,
-        intermediateValue: 0,
+        intermediateValue: 0, //även kallat z
         fromConnections: [],
         toConnections: [],
         error2: 0,
@@ -85,6 +85,12 @@ function createUnit(name, x, y, type) {
     }
     else if(type==unit_types.out) {
         unit.color = "#ff0000";
+    }
+    else if (type==unit_types.hidden) {
+        unit.color = "#0a0";
+    }
+    else {
+        unit.color = "#aaa";
     }
     network.units.push(unit);
     network.map[unit.name] = unit;

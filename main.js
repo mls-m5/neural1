@@ -21,7 +21,7 @@ network = {
         for (var i in this.connections) {
             this.connections[i].prepareCalculation();
         }
-        for (var i in this.units) {
+        for (var i = this.units.length - 1; i >= 0; --i) {
             this.units[i].backpropagate();
         }
         for (var i in this.connections) {
@@ -73,49 +73,12 @@ $(document).ready(function() {
 	window.canvas = document.getElementById("neural_canvas");
 	window.ctx = canvas.getContext("2d");
     
-    x1 = createUnit("x1", 100, 100, unit_types.in);
-    x2 = createUnit("x2", 100, 200, unit_types.in);
-    b = createUnit("bias", 150, 70, unit_types.const);
-    y = createUnit("y1", 200, 150, unit_types.out);
-    
-    createConnection(x1, y);
-    createConnection(x2, y);
-    createConnection(b, y);
-    
-    
-    
-    
-    var training_sets = [
-        {
-            x1: 1,
-            x2: 1,
-            y1: 1
-        },
-        {
-            x1: 0,
-            x2: 0,
-            y1: 1
-        },
-        {
-            x1: 0,
-            x2: 1,
-            y1: 0
-        },
-        {
-            x1: 1,
-            x2: 0,
-            y1: 0
-        },
-    ];
-    
-    network.setTrainingSets(training_sets);
-    
+    createThreeLayerNetwork();
     
     network.calculate();
     
     network.draw();
     
-    console.log(JSON.stringify(training_sets));
     
     
     $("#step_button").click(function() {

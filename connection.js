@@ -16,14 +16,16 @@ function createConnection(from, to) {
             if (this.weight < 0) {
                 ctx.setLineDash([5]);
                 ctx.strokeStyle = "rgba(265, 0, 0, " + -this.weight + ")";
-                ctx.lineWidth = 3;
+                ctx.lineWidth = this.weight * 10;
             }
             else {
                 ctx.strokeStyle = "rgba(0, 0, 0, " + this.weight + ")";
+                ctx.lineWidth = this.weight * 10;
             }
-            ctx.lineWidth = 1;
             ctx.setLineDash([]);
             drawLine(this.from.x, this.from.y, this.to.x, this.to.y);
+            
+            ctx.lineWidth = 1;
             ctx.strokeStyle = "black";
             midx = (this.from.x + this.to.x) / 2;
             midy = (this.from.y + this.to.y) / 2;
